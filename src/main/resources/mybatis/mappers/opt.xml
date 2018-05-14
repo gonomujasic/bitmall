@@ -1,0 +1,172 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="opt">
+
+	<select id="getOptList" resultType="optvo">
+		<![CDATA[
+			SELECT NO, NAME
+				FROM OPT
+				ORDER BY NO DESC 
+		]]>		
+	</select>
+
+	<select id="getTotalCount" resultType="integer">
+		<![CDATA[
+		SELECT COUNT(*) 
+			FROM OPT
+			WHERE 1 = 1 
+		]]>
+	</select>
+
+	<insert id="insertOpt" parameterType="optvo">
+		<![CDATA[
+		INSERT 
+			INTO OPT (NO, NAME)
+			VALUES (NULL, #{name})
+		]]>
+	</insert>
+	
+	<update id="editOpt" parameterType="optvo">
+		<![CDATA[
+		UPDATE OPT
+			SET NAME = #{name}
+			WHERE NO = #{no} 
+		]]>
+	</update>
+
+	<delete id="deleteOpt" parameterType="long">
+		<![CDATA[
+		DELETE 
+			FROM OPT
+			WHERE NO = #{no} 
+		]]>
+	</delete>
+
+	<select id="getOpt" parameterType="long" resultType="optvo">
+		<![CDATA[
+			SELECT NO, NAME
+				FROM OPT
+				WHERE NO = #{no}
+		]]>		
+	</select>
+
+	<select id="getOptsList" parameterType="long" resultType="optsvo">
+		<![CDATA[
+			SELECT NO, NAME
+				FROM OPTS
+				WHERE OPT_NO = #{no}
+				ORDER BY NO DESC 
+		]]>		
+	</select>
+	
+	<select id="getOptName" resultType="string">
+		<![CDATA[
+			SELECT NAME
+				FROM OPT
+				WHERE NO = #{no}
+		]]>		
+	</select>
+
+	
+	<insert id="insertOpts" parameterType="optsvo">
+		<![CDATA[
+		INSERT 
+			INTO OPTS 
+			VALUES (NULL, #{name}, #{optNo})
+		]]>
+	</insert>
+	
+	<update id="editOpts" parameterType="optsvo">
+		<![CDATA[
+		UPDATE OPTS
+			SET NAME = #{name}
+			WHERE NO = #{no} 
+		]]>
+	</update>
+
+	<delete id="deleteOpts" parameterType="long">
+		<![CDATA[
+		DELETE 
+			FROM OPTS
+			WHERE NO = #{no} 
+		]]>
+	</delete>
+
+	<select id="getOpts" parameterType="long" resultType="optsvo">
+		<![CDATA[
+			SELECT NO, NAME
+				FROM OPTS
+				WHERE NO = #{no}
+		]]>		
+	</select>
+	
+<!-- 	<select id="getList2" parameterType="long" resultType="guestbookvo">
+		<![CDATA[
+		  select no, 
+			     name, 
+		         content, 
+			     date_format(reg_date, '%Y-%m-%d %h:%i:%s') as regDate 
+		    from guestbook
+		]]>		
+		<if test="_parameter > 0">
+			<![CDATA[
+		    where no < #{_parameter } 	
+			]]>		
+		</if>    
+		<![CDATA[
+	    order by reg_date desc
+	       limit 0, 5
+		]]>		
+	</select>
+	
+	<select id="getList" resultType="guestbookvo">
+		<![CDATA[
+		  select no, 
+			     name, 
+		         content, 
+			     date_format(reg_date, '%Y-%m-%d %h:%i:%s') as regDate 
+		    from guestbook
+	    order by reg_date desc
+		]]>		
+	</select>
+	
+	<select id="getByNo" parameterType="long" resultType="guestbookvo">
+		<![CDATA[
+		  select no, 
+			     name, 
+		         content, 
+			     date_format(reg_date, '%Y-%m-%d %h:%i:%s') as regDate 
+		    from guestbook
+		   where no = #{no }
+		]]>		
+	</select>	
+	
+	<delete id="delete" parameterType="guestbookvo">
+		<![CDATA[
+		delete
+		  from guestbook 
+		 where no=#{no }
+		   and password=#{password }
+		]]>	
+	</delete>
+	
+	
+	
+	<insert id="insert" parameterType="guestbookvo">
+		<![CDATA[
+		insert 
+		  into guestbook 
+		values ( null, 
+		         #{name },
+		         #{password },
+		         #{content },
+		         now() )		
+		]]>
+		<selectKey keyProperty="no" resultType="long" order="AFTER">
+			<![CDATA[
+			select last_insert_id()	
+			]]>
+		</selectKey>
+	</insert> -->
+</mapper>

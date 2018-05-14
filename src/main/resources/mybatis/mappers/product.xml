@@ -1,0 +1,246 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="product">
+
+	<sql id="keyword">
+		
+		<if test="product_status > 0">
+			AND P.PRODUCT_STATUS_NO = #{product_status}
+		</if>
+		<choose>
+			<when test="icon == 1">
+				AND P.NEW = TRUE
+			</when>
+			<when test="icon == 2">
+				AND P.HIT = TRUE
+			</when>
+			<when test="icon == 3">
+				AND P.SALE = TRUE
+			</when>
+		</choose>
+		<if test="category > 0">
+			AND P.CATEGORY_NO = #{category}
+		</if>
+		<choose>
+			<when test="productNN == 1">
+				AND P.NAME LIKE '%${keyword}%'
+			</when>
+			<when test="productNN == 2">
+				AND P.CONTENT LIKE '%${keyword}%'
+			</when>
+		</choose>
+	</sql>
+	
+	<select id="getProductList" parameterType="map" resultType="productvo">
+	<![CDATA[
+		SELECT P.NO AS no, 
+				P.CODE AS code, 
+				P.NAME AS name, 
+				P.CONAME AS coname, 
+				P.PRICE AS price, 
+				P.NEW AS iconNew, 
+				P.HIT AS iconHit, 
+				P.SALE AS iconSale, 
+				P.DISCOUNT AS discount, 
+				P.CONTENT AS content, 
+				C.NAME AS categoryName, 
+				S.STATUS AS productStatusName
+			FROM PRODUCT P, CATEGORY C, PRODUCT_STATUS S
+			WHERE C.NO = P.CATEGORY_NO
+        	AND S.NO = P.PRODUCT_STATUS_NO
+        
+		]]>	
+		
+		<include refid="keyword"/>
+		
+		<![CDATA[
+		ORDER BY NO DESC 
+		LIMIT #{page}, #{size}
+	]]>	
+	</select>
+
+	<select id="getTotalCount" resultType="integer" parameterType="map">
+		<![CDATA[
+		SELECT COUNT(*) 
+			FROM PRODUCT P
+			WHERE 1 = 1 
+		]]>
+		
+		<include refid="keyword"/>
+		
+	</select>
+	
+	<select id="getCategoryList" resultType="categoryvo">
+		SELECT NO, NAME 
+				FROM CATEGORY 
+				ORDER BY NO
+	</select>
+	<insert id="makeNewProduct" parameterType="productvo">
+		<![CDATA[
+			INSERT INTO 
+			PRODUCT (NO, CODE, NAME, CONAME, PRICE, 
+					NEW, HIT, SALE, DISCOUNT, CONTENT, 
+					CATEGORY_NO, OPT_NO, PRODUCT_STATUS_NO)
+			VALUES (NULL, 
+			#{code}, 
+			#{name}, 
+			#{coname}, 
+			#{price}, 
+			#{iconNew}, 
+			#{iconHit}, 
+			#{iconSale}, 
+			#{discount}, 
+			#{content}, 
+			(SELECT C.NO FROM CATEGORY C WHERE C.NAME =#{categoryName}), 
+			(SELECT O.NO FROM OPT O WHERE O.NAME =#{optName}), 
+			#{productStatusNo} 
+			)
+		]]>
+			<selectKey keyProperty="no" resultType="long" order="AFTER">
+			<![CDATA[
+			select last_insert_id()	
+			]]>
+		</selectKey>
+	</insert>
+	
+	<select id="getNewProductList" resultType="productvo">
+	<![CDATA[
+           SELECT P.NO AS no, 
+				P.CODE AS code, 
+				P.NAME AS name, 
+				P.PRICE AS price, 
+				P.NEW AS iconNew, 
+				P.HIT AS iconHit, 
+				P.SALE AS iconSale, 
+				P.DISCOUNT AS discount, 
+				IMAGE.PATH AS path
+			FROM CATEGORY C, PRODUCT_STATUS S, PRODUCT P LEFT OUTER JOIN (SELECT I.NO, I.PATH, I.PRODUCT_NO FROM IMAGE I, PRODUCT P WHERE I.PRODUCT_NO = P.NO GROUP BY I.PRODUCT_NO) IMAGE
+			ON P.NO = IMAGE.PRODUCT_NO
+        	WHERE S.NO = P.PRODUCT_STATUS_NO
+            AND C.NO = P.CATEGORY_NO
+        	AND P.PRODUCT_STATUS_NO = 1
+        	ORDER BY NO DESC 
+			LIMIT 0, 15
+	]]>	
+	</select>
+	<select id="getProductDetail" parameterType="long" resultType="productvo">
+			SELECT P.NO AS no, 
+				P.CODE AS code, 
+				P.NAME AS name, 
+				P.CONAME AS coname, 
+				P.PRICE AS price, 
+				P.NEW AS iconNew, 
+				P.HIT AS iconHit, 
+				P.SALE AS iconSale, 
+				P.DISCOUNT AS discount, 
+				P.CONTENT AS content, 
+				C.NAME AS categoryName, 
+				S.STATUS AS productStatusName,
+				O.NO AS optNo,
+				O.NAME AS optName
+			FROM CATEGORY C, PRODUCT_STATUS S, PRODUCT P, OPT O
+            WHERE C.NO = P.CATEGORY_NO
+        	AND S.NO = P.PRODUCT_STATUS_NO
+        	AND O.NO = P.OPT_NO
+        	AND P.NO = #{no}
+        	
+	</select>
+	
+	<!-- 
+	<update id="update" parameterType="boardvo">
+		<![CDATA[
+			UPDATE BOARD
+				SET TITLE = #{title},
+					CONTENT = #{content}
+				WHERE NO = #{no}	
+		]]>
+	</update>
+	
+	<delete id="delete">
+		<![CDATA[
+			DELETE FROM BOARD
+				WHERE NO = #{no}
+		]]>
+	</delete>
+	
+	<select id="checkPW" parameterType="map" resultType="integer">
+		SELECT COUNT(*) 
+			FROM USER
+			WHERE NO = #{userNo}
+			AND PASSWORD = PASSWORD(#{password})
+	</select>
+
+	<select id="view" parameterType="long" resultType="boardvo">
+		SELECT B.NO, 
+				B.TITLE, 
+				B.CONTENT, 
+				DATE_FORMAT(B.REG_DATE, '%Y-%m-%d %h:%m:%s') AS regDate, 
+				B.GROUP_NO AS groupNo, 
+				B.ORDER_NO AS orderNo, 
+				B.DEPTH, 
+				U.NAME AS userName, 
+				U.NO 
+			FROM BOARD B, USER U 
+			WHERE B.USER_NO = U.NO 
+			AND B.NO = #{no}
+	</select>
+
+	<update id="readCount" parameterType="long">
+		UPDATE BOARD 
+			SET HIT = HIT + 1 
+			WHERE NO = #{no}
+	</update>
+	
+	<select id="cList" parameterType="long" resultType="commentvo">
+		SELECT C.NO, 
+				C.CONTENT, 
+				DATE_FORMAT(C.REG_DATE, '%Y-%m-%d %h:%m:%s') AS regDate, 
+				U.NAME AS userName
+			FROM BOARD B, USER U, COMMENT C 
+			WHERE C.USER_NO = U.NO 
+			AND C.BOARD_NO = B.NO 
+			AND C.BOARD_NO = #{no}
+			
+	</select>
+	
+	<select id="groupNo" parameterType="long" resultType="long">
+		SELECT GROUP_NO 
+				FROM BOARD 
+				WHERE NO = #{no}
+	</select>
+	
+	<select id="beforeReply" parameterType="boardvo">
+		UPDATE BOARD A, (SELECT ORDER_NO FROM BOARD WHERE NO = #{no}) B 
+				SET A.ORDER_NO = A.ORDER_NO + 1 
+				WHERE A.ORDER_NO > B.ORDER_NO AND A.GROUP_NO = #{groupNo};
+	</select>
+	
+	<select id="reply" parameterType="boardvo">
+			INSERT INTO BOARD 
+				VALUES (NULL, 
+						#{title}, 
+						#{content}, 
+						NOW(), 
+						0, 
+						#{groupNo}, 
+						(SELECT ORDER_NO FROM BOARD A WHERE NO = #{no})+1, 
+						(SELECT A.DEPTH FROM BOARD A WHERE NO = #{no})+1, 
+						#{userNo})
+	</select>
+	
+	<insert id="cInsert" parameterType="commentvo">
+		INSERT INTO COMMENT 
+			VALUES (NULL, 
+					#{content}, 
+					NOW(), 
+					#{boardNo}, 
+					#{userNo})
+	</insert>
+	
+	<delete id="cDelete" parameterType="map">
+		DELETE FROM COMMENT 
+			WHERE NO = #{no} 
+			AND BOARD_NO = #{bno}
+	</delete> -->
+</mapper>

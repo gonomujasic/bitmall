@@ -12,20 +12,21 @@
 <br>
 <jsp:include page="/WEB-INF/views/include/admin-menu.jsp"/>
 <hr width='900' size='3'>
-<form name="form1" method="post" action="opt_update.html">
+<form name="form1" method="post" action="/admin/opt_edit">
 <table width="500" border="1" cellspacing="0" bordercolordark="white" bordercolorlight="black">
 	<tr> 
 		<td width="100" height="20" bgcolor="#CCCCCC" align="center">
 			<font color="#142712">옵션번호</font>
 		</td>
-		<td width="400" height="20"  bgcolor="#F2F2F2">1</td>
+		<td width="400" height="20"  bgcolor="#F2F2F2">${vo.no }</td>
 	</tr>
 	<tr> 
 		<td width="100" height="20" bgcolor="#CCCCCC" align="center">
 			<font color="#142712">옵션명</font>
 		</td>
 		<td width="400" height="20"  bgcolor="#F2F2F2">
-			<input type="text" name="name" value="사이즈" size="20" maxlength="20">
+			<input type="hidden" name="no" value="${vo.no }">
+			<input type="text" name="name" value="${vo.name }" size="20" maxlength="20">
 		</td>
 	</tr>
 </table>
@@ -34,7 +35,7 @@
 	<tr> 
 		<td align="center">
 			<input type="submit" value="수 정 하 기"> &nbsp;&nbsp
-			<a href="opt.jsp"><input type="button" value="이 전 화 면"></a>
+			<a href="/admin/opt"><input type="button" value="이 전 화 면"></a>
 		</td>
 	</tr>
 </table>

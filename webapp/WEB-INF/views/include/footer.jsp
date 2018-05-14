@@ -19,11 +19,11 @@
 								<td> 
 									<table border="0" cellspacing="0" cellpadding="0">
 										<tr> 
-											<td><a href="company.jsp"><img src="${pageContext.servletContext.contextPath }/assets/images/footer_menu01.gif" border="0"></a></td>
+											<td><a href="/site/company"><img src="${pageContext.servletContext.contextPath }/assets/images/footer_menu01.gif" border="0"></a></td>
 											<td><img src="${pageContext.servletContext.contextPath }/assets/images/footer_line.gif"></td>
-											<td><a href="useinfo.jsp"><img src="${pageContext.servletContext.contextPath }/assets/images/footer_menu02.gif" border="0"></a></td>
+											<td><a href="/site/useinfo"><img src="${pageContext.servletContext.contextPath }/assets/images/footer_menu02.gif" border="0"></a></td>
 											<td><img src="${pageContext.servletContext.contextPath }/assets/images/footer_line.gif"></td>
-											<td><a href="policy.jsp"><img src="${pageContext.servletContext.contextPath }/assets/images/footer_menu03.gif" border="0"></a></td>
+											<td><a href="/site/policy"><img src="${pageContext.servletContext.contextPath }/assets/images/footer_menu03.gif" border="0"></a></td>
 										</tr>
 									</table>
 								</td>

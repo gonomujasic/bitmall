@@ -12,7 +12,7 @@
 <br>
 <jsp:include page="/WEB-INF/views/include/admin-menu.jsp"/>
 <hr width='900' size='3'>
-<form name="form1" method="post" action="opt_insert.jsp">
+<form name="form1" method="post" action="/admin/opt_new">
 
 <table width="500" border="1" cellspacing="0" bordercolordark="white" bordercolorlight="black">
 	<tr> 
@@ -29,7 +29,7 @@
 	<tr> 
 		<td align="center">
 			<input type="submit" value="등 록 하 기"> &nbsp;&nbsp
-			<a href="opt.jsp"><input type="button" value="이 전 화 면"></a>
+			<a href="/admin/opt"><input type="button" value="이 전 화 면"></a>
 		</td>
 	</tr>
 </table>

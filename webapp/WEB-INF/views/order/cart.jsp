@@ -54,65 +54,44 @@
 					<td width="90"  align="center">합계</td>
 					<td width="50"  align="center">삭제</td>
 				</tr>
+					<c:forEach items="${cartList }" var="cart">
 				<tr>
+				<c:set var="sum" value="0"></c:set>
 					<form name="form2" method="post" action="">
 					<td height="60" align="center" bgcolor="#FFFFFF">
 						<table cellpadding="0" cellspacing="0" width="100%">
 							<tr>
 								<td width="60">
-									<a href="product_detail.jsp?product_num=0000"><img src="${pageContext.servletContext.contextPath }/assets/images/product/0000_s.jpg" width="50" height="50" border="0"></a>
+									<a href="product_detail?no="${cart.productNo }><img src="${pageContext.servletContext.contextPath }${cart.path}" width="50" height="50" border="0"></a>
 								</td>
 								<td class="cmfont">
-									<a href="product_detail.jsp?product_num=0000">제품명</a><br>
-									<font color="#0066CC">[옵션사항]</font> 옵션1
+									<a href="product_detail.jsp?product_num=0000">${cart.productName }</a><br>
+									<font color="#0066CC">[${cart.optName}]</font> ${cart.optsName }
 								</td>
 							</tr>
 						</table>
 					</td>
 					<td align="center" bgcolor="#FFFFFF">
-						<input type="text" name="num1" size="3" value="1" class="cmfont1">&nbsp<font color="#464646">개</font>
+						<input type="text" name="num1" size="3" value="${cart.count }" class="cmfont1"><font color="#464646">개</font>
 					</td>
-					<td align="center" bgcolor="#FFFFFF"><font color="#464646">70,200</font></td>
-					<td align="center" bgcolor="#FFFFFF"><font color="#464646">70,200</font></td>
+					<td align="center" bgcolor="#FFFFFF"><font color="#464646">${cart.price }</font></td>
+					<td align="center" bgcolor="#FFFFFF"><font color="#464646">${cart.price * cart.count }</font></td>
 					<td align="center" bgcolor="#FFFFFF">
 						<input type="image" src="${pageContext.servletContext.contextPath }/assets/images/b_edit1.gif" border="0">&nbsp<br>
 						<a href = "#"><img src="${pageContext.servletContext.contextPath }/assets/images/b_delete1.gif" border="0"></a>&nbsp
 					</td>
 					</form>
 				</tr>
-				<tr>
-					<form name="form2" method="post" action="">
-					<td height="60" align="center" bgcolor="#FFFFFF">
-						<table cellpadding="0" cellspacing="0" width="100%">
-							<tr>
-								<td width="60">
-									<a href="product_detail.jsp?product_num=0000"><img src="${pageContext.servletContext.contextPath }/assets/images/product/0000_s.jpg" width="50" height="50" border="0"></a>
-								</td>
-								<td class="cmfont">
-									<a href="product_detail.jsp?product_num=0000">제품명2</a><br>
-									<font color="#0066CC">[옵션사항]</font> 옵션2
-								</td>
-							</tr>
-						</table>
-					</td>
-					<td align="center" bgcolor="#FFFFFF">
-						<input type="text" name="num2" size="3" value="1" class="cmfont1">&nbsp<font color="#464646">개</font>
-					</td>
-					<td align="center" bgcolor="#FFFFFF"><font color="#464646">60,000</font></td>
-					<td align="center" bgcolor="#FFFFFF"><font color="#464646">60,000</font></td>
-					<td align="center" bgcolor="#FFFFFF">
-						<input type="image" src="${pageContext.servletContext.contextPath }/assets/images/b_edit1.gif" border="0">&nbsp<br>
-						<a href = "#"><img src="${pageContext.servletContext.contextPath }/assets/images/b_delete1.gif" border="0"></a>&nbsp
-					</td>
-					</form>
-				</tr>
+						<c:set var="sum" value="${sum+ cart.price * cart.count }"></c:set>
+						
+					</c:forEach>
 				<tr>
 					<td colspan="5" bgcolor="#F0F0F0">
 						<table width="100%" border="0" cellpadding="0" cellspacing="0" class="cmfont">
 							<tr>
 								<td bgcolor="#F0F0F0"><img src="${pageContext.servletContext.contextPath }/assets/images/cart_image1.gif" border="0"></td>
 								<td align="right" bgcolor="#F0F0F0">
-									<font color="#0066CC"><b>총 합계금액</font></b> : 상품대금(132,000원) + 배송료(2,500원) = <font color="#FF3333"><b>134,500원</b></font>&nbsp;&nbsp
+									<font color="#0066CC"><b>총 합계금액</font></b> : 상품대금(<fmt:formatNumber value="${sum}" type="currency"/> 원) + 배송료(2,500원) = <font color="#FF3333"><b><fmt:formatNumber value="${sum+2500 }" type="currency"/>원</b></font>&nbsp;&nbsp
 								</td>
 							</tr>
 						</table>

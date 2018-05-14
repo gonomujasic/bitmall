@@ -14,9 +14,9 @@
 <hr width='900' size='3'>
 <table width="450" border="0" cellspacing="0" cellpadding="0">
 	<tr height="50">
-		<td align="left"  width="300" valign="bottom">&nbsp 옵션명 : <font color="#0457A2"><b>사이즈</b></font></td>
+		<td align="left"  width="300" valign="bottom">&nbsp 옵션명 : <font color="#0457A2"><b>${vo.name }</b></font></td>
 		<td align="right" width="200" valign="bottom">
-			<input type="button" value="신규입력" onclick="javascript:go_new();"> &nbsp
+			<a href="/admin/opts_new?no=${vo.no }"><input type="button" value="신규입력"></a> &nbsp
 		</td>
 	</tr>
 	<tr><td height="5" colspan="2"></td></tr>
@@ -28,38 +28,17 @@
 		<td width="300" align="center"><font color="#142712">소옵션명</font></td>
 		<td width="100" align="center"><font color="#142712">수정/삭제</font></td>
 	</tr>
+	<c:set var="size" value="${fn:length(vo.optsList) }"/>
+	<c:forEach items="${vo.optsList }" var="opts" varStatus="i">
 	<tr bgcolor="#F2F2F2" height="20">	
-		<td width="100" align="center">1</td>
-		<td width="300" align="left">XL</td>
+		<td width="100" align="center">${size - i.index}</td>
+		<td width="300" align="left">${opts.name }</td>
 		<td width="100" align="center">
-			<a href="opts_edit.jsp?no1=1&no2=1">수정</a>/
-			<a href="">삭제</a>
+			<a href="opts_edit?no=${opts.no }&optNo=${vo.no}">수정</a>/
+			<a href="opts_delete?no=${opts.no }&optNo=${vo.no}">삭제</a>
 		</td>
 	</tr>
-	<tr bgcolor="#F2F2F2" height="20">	
-		<td width="100" align="center">2</td>
-		<td width="300" align="left">L</td>
-		<td width="100" align="center">
-			<a href="opts_edit.jsp?no1=1&no2=2">수정</a>/
-			<a href="">삭제</a>
-		</td>
-	</tr>
-	<tr bgcolor="#F2F2F2" height="20">	
-		<td width="100" align="center">3</td>
-		<td width="300" align="left">M</td>
-		<td width="100" align="center">
-			<a href="opts_edit.jsp?no1=1&no2=3">수정</a>/
-			<a href="">삭제</a>
-		</td>
-	</tr>
-	<tr bgcolor="#F2F2F2" height="20">	
-		<td width="100" align="center">4</td>
-		<td width="300" align="left">S</td>
-		<td width="100" align="center">
-			<a href="opts_edit.jsp?no1=1&no2=4">수정</a>/
-			<a href="">삭제</a>
-		</td>
-	</tr>
+	</c:forEach>
 </table>
 </body>
 </html>

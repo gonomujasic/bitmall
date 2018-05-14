@@ -12,23 +12,23 @@
 <br>
 <jsp:include page="/WEB-INF/views/include/admin-menu.jsp"/>
 <hr width='900' size='3'>
-<form name="form1" method="post" action="opts_update.html">
-<input type="hidden" name="no1" value="1">
-<input type="hidden" name="no2" value="1">
+<form name="form1" method="post" action="/admin/opts_edit">
 
 <table width="500" border="1" cellspacing="0" bordercolordark="white" bordercolorlight="black">
 	<tr> 
 		<td width="100" height="20" bgcolor="#CCCCCC" align="center">
 			<font color="#142712">소옵션번호</font>
 		</td>
-		<td width="400" height="20"  bgcolor="#F2F2F2">1</td>
+		<td width="400" height="20"  bgcolor="#F2F2F2">${vo.no }</td>
 	</tr>
 	<tr> 
 		<td width="100" height="20" bgcolor="#CCCCCC" align="center">
 			<font color="#142712">소옵션명</font>
 		</td>
 		<td width="400" height="20"  bgcolor="#F2F2F2">
-			<input type="text" name="name" value="XL" size="20" maxlength="20">
+			<input type="hidden" name="no" value="${vo.no }">
+			<input type="hidden" name="optNo" value="${vo.optNo }">
+			<input type="text" name="name" value="${vo.name }" size="20" maxlength="20">
 		</td>
 	</tr>
 </table>
@@ -37,7 +37,7 @@
 	<tr> 
 		<td align="center">
 			<input type="submit" value="수 정 하 기"> &nbsp;&nbsp
-			<a href="opts.jsp"><input type="button" value="이 전 화 면"></a>
+			<a href="/admin/opts?no=${vo.optNo }"><input type="button" value="이 전 화 면"></a>
 		</td>
 	</tr>
 </table>

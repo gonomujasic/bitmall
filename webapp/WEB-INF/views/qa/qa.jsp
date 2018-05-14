@@ -65,7 +65,7 @@
 				<tr><td height="1" bgcolor="#DEDCDD"colspan="5"></td></tr>
 				<tr height="25" bgcolor="#FFFFFF">	
 					<td width="90" align="center"><font color="#686868">3</font></td>	
-					<td><a href="qa_read.jsp?no=1&page=1&sel1=1&text1="><font color="#4186C7">새소식1</font></a></td>	
+					<td><a href="qa_read?no=1&page=1&sel1=1&text1="><font color="#4186C7">새소식1</font></a></td>	
 					<td width="90" align="center"><font color="#686868">홍길동</font></td>	
 					<td width="90" align="center"><font color="#686868">2007-01-02</font></td>	
 					<td width="90" align="center"><font color="#686868">11</font></td>
@@ -94,7 +94,7 @@
 				<tr><td height="1" bgcolor="#DEDCDD"colspan="5"></td></tr>
 				<tr height="25" bgcolor="#FFFFFF">	
 					<td width="90" align="center"><font color="#686868">2</font></td>	
-					<td><a href="qa_read.jsp?no=4&page=1&sel1=1&text1="><font color="#4186C7">새소식2</font></a></td>	
+					<td><a href="qa_read?no=4&page=1&sel1=1&text1="><font color="#4186C7">새소식2</font></a></td>	
 					<td width="90" align="center"><font color="#686868">홍길동</font></td>	
 					<td width="90" align="center"><font color="#686868">2007-01-01</font></td>	
 					<td width="90" align="center"><font color="#686868">12</font></td>
@@ -168,7 +168,7 @@
 						<input type="image" src="${pageContext.servletContext.contextPath }/assets/images/i_search.gif" align="absmiddle" border="0" onclick="javascript:Search_qa();">
 					</td>
 					<td align="right">
-						<a href="qa_new.jsp"><img src="${pageContext.servletContext.contextPath }/assets/images/b_new.gif" border="0"></a>&nbsp;
+						<a href="qa_new"><img src="${pageContext.servletContext.contextPath }/assets/images/b_new.gif" border="0"></a>&nbsp;
 					</td>
 				</tr>
 				</form>
@@ -180,8 +180,8 @@
 					<td height="30" class="cmfont" align="center">
 						<img src="${pageContext.servletContext.contextPath }/assets/images/i_prev.gif" align="absmiddle" border="0"> 
 						<font color="#FC0504"><b>1</b></font>&nbsp;
-						<a href="qa.jsp?page=2&sel1=&text1="><font color="#7C7A77">[2]</font></a>&nbsp;
-						<a href="qa.jsp?page=3&sel1=&text1="><font color="#7C7A77">[3]</font></a>&nbsp;
+						<a href="qa?page=2&sel1=&text1="><font color="#7C7A77">[2]</font></a>&nbsp;
+						<a href="qa?page=3&sel1=&text1="><font color="#7C7A77">[3]</font></a>&nbsp;
 						<img src="${pageContext.servletContext.contextPath }/assets/images/i_next.gif" align="absmiddle" border="0">
 					</td>
 				</tr>
